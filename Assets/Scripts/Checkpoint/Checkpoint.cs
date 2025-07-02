@@ -11,6 +11,7 @@ public class Checkpoint : MonoBehaviour
     public Animator checkpointAnimator = null;
     public string animatorActiveParameter = "isActive";
     public GameObject checkpointActivationEffect;
+    public string checkpointID;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
