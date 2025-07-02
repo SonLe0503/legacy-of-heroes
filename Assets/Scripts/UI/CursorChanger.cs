@@ -7,31 +7,13 @@ using UnityEngine;
 /// </summary>
 public class CursorChanger : MonoBehaviour
 {
-    [Header("Settings:")]
-    [Tooltip("The cursor to change to")]
     public Texture2D newCursorSprite;
 
-    /// <summary>
-    /// Description:
-    /// Standard Unity function called once before the first update
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
-    /// </summary>
     void Start()
     {
         ChangeCursor();
     }
 
-    /// <summary>
-    /// Description:
-    /// Changes the cursor to the one set in editor
-    /// Input:
-    /// None
-    /// Return:
-    /// void (no return)
-    /// </summary>
     void ChangeCursor()
     {
         Cursor.lockState = CursorLockMode.Confined;

@@ -9,15 +9,6 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class LevelLoadButton : MonoBehaviour
 {
-    /// <summary>
-    /// Description:
-    /// Loads a level according to the name provided
-    /// Input:
-    /// string levelToLoadName
-    /// Return:
-    /// void (no return)
-    /// </summary>
-    /// <param name="levelToLoadName">The name of the level to load</param>
     public void LoadLevelByName(string levelToLoadName)
     {
         SceneManager.LoadScene(levelToLoadName);

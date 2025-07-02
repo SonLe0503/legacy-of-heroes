@@ -8,21 +8,10 @@ using UnityEngine;
 [RequireComponent(typeof(WaypointMover))]
 public class FlyingEnemy : EnemyBase
 {
-    [Header("References")]
-    [Tooltip("The waypoint mover component which does the work of moving this enemy")]
     public WaypointMover waypointMover = null;
 
-    // The sprite renderer associated with this enemy
     private SpriteRenderer spriteRenderer = null;
 
-    /// <summary>
-    /// Description:
-    /// Sets up this script (it's reference to a waypoint mover)
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     protected override void Setup()
     {
         base.Setup();
@@ -30,29 +19,11 @@ public class FlyingEnemy : EnemyBase
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    /// <summary>
-    /// Description:
-    /// Overrides the base enemy update function, to avoid the base class controlling this script's movement
-    /// Also sets enemy state according to the waypoint mover
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     protected override void Update()
     {
         CheckFlipSprite();
         SetStateInformation();
     }
-
-    /// <summary>
-    /// Description:
-    /// Determines if it is necessary to flip this sprite horizontally
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     private void CheckFlipSprite()
     {
         if (waypointMover != null && spriteRenderer != null)
@@ -61,14 +32,6 @@ public class FlyingEnemy : EnemyBase
         }
     }
 
-    /// <summary>
-    /// Description:
-    /// Sets the state of this enemy according to the waypoint mover component associated with it
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     protected virtual void SetStateInformation()
     {
         if (waypointMover != null)

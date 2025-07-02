@@ -7,25 +7,11 @@ using UnityEngine;
 /// </summary>
 public class Checkpoint : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("The location this checkpoint will respawn the player at")]
     public Transform respawnLocation;
-    [Tooltip("The animator for this checkpoint")]
     public Animator checkpointAnimator = null;
-    [Tooltip("The name of the parameter in the animator which determines if this checkpoint displays as active")]
     public string animatorActiveParameter = "isActive";
-    [Tooltip("The effect to create when activating the checkpoint")]
     public GameObject checkpointActivationEffect;
 
-    /// <summary>
-    /// Description:
-    /// Standard unity function called when a trigger is entered by another collider
-    /// Input:
-    /// Collider2D collision
-    /// Returns:
-    /// void (no return)
-    /// </summary>
-    /// <param name="collision">The collider2D that has entered the trigger</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player" && collision.gameObject.GetComponent<Health>() != null)

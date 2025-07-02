@@ -9,12 +9,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("Game Object and Component References")]
-    [Tooltip("The Ground Check component used to check whether this player is grounded currently.")]
     public GroundCheck groundCheck = null;
-    [Tooltip("The sprite renderer that represents the player.")]
     public SpriteRenderer spriteRenderer = null;
-    [Tooltip("The health component attached to the player.")]
     public Health playerHealth;
 
     // The rigidbody used to move the player (necessary for this component, so not made public)
@@ -72,26 +68,15 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    [Header("Movement Settings")]
-    [Tooltip("The speed at which to move the player horizontally")]
     public float movementSpeed = 4.0f;
 
-    [Header("Jump Settings")]
-    [Tooltip("The force with which the player jumps.")]
     public float jumpPower = 10.0f;
-    [Tooltip("The number of jumps that the player is alowed to make.")]
     public int allowedJumps = 1;
-    [Tooltip("The duration that the player spends in the \"jump\" state")]
     public float jumpDuration = 0.1f;
-    [Tooltip("The effect to spawn when the player jumps")]
     public GameObject jumpEffect = null;
-    [Tooltip("Layers to pass through when moving upwards")]
     public List<string> passThroughLayers = new List<string>();
 
-    [Header("Input Actions & Controls")]
-    [Tooltip("The input action(s) that map to player movement")]
     public InputAction moveAction;
-    [Tooltip("The input action(s) that map to jumping")]
     public InputAction jumpAction;
 
     // The number of times this player has jumped since being grounded
@@ -100,9 +85,7 @@ public class PlayerController : MonoBehaviour
     private bool jumping = false;
 
     #region Player State Variables
-    /// <summary>
-    /// Enum used for categorizing the player's state
-    /// </summary>
+
     public enum PlayerState
     {
         Idle,
@@ -112,53 +95,29 @@ public class PlayerController : MonoBehaviour
         Dead
     }
 
-    // The player's current state (walking, idle, jumping, or falling)
     public PlayerState state = PlayerState.Idle;
     #endregion
 
     #region Functions
     #region GameObject Functions
 
-    /// <summary>
-    /// Standard Unity function called whenever the attached gameobject is enabled
-    /// </summary>
     void OnEnable()
     {
         moveAction.Enable();
         jumpAction.Enable();
     }
 
-    /// <summary>
-    /// Standard Unity function called whenever the attached gameobject is disabled
-    /// </summary>
     void OnDisable()
     {
         moveAction.Disable();
         jumpAction.Disable();
     }
 
-    /// <summary>
-    /// Description:
-    /// Standard Unity function called once before the first update
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     private void Start()
     {
         SetupRigidbody();
     }
 
-    /// <summary>
-    /// Description:
-    /// Standard Unity function called once every frame after update
-    /// Every frame, process input, move the player, determine which way they should face, and choose which state they are in
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     private void LateUpdate()
     {
         ProcessInput();
@@ -168,24 +127,12 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Input Handling and Movement Functions
-    /// <summary>
-    /// Description:
-    /// Processes input
-    /// Input: none
-    /// Return: void (no return)
-    /// </summary>
     private void ProcessInput()
     {
         HandleMovementInput();
         HandleJumpInput();
     }
 
-    /// <summary>
-    /// Description:
-    /// Handles movement input
-    /// Input: none
-    /// Return: void (no return)
-    /// </summary>
     private void HandleMovementInput()
     {
         Vector2 movementForce = Vector2.zero;
@@ -196,15 +143,6 @@ public class PlayerController : MonoBehaviour
         MovePlayer(movementForce);
     }
 
-    /// <summary>
-    /// Description:
-    /// Moves the player with a specified force
-    /// Input: 
-    /// Vector2 movementForce
-    /// Return: 
-    /// void (no return)
-    /// </summary>
-    /// <param name="movementForce">The force with which to move the player</param>
     private void MovePlayer(Vector2 movementForce)
     {
         if (grounded && !jumping)
@@ -235,14 +173,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Description:
-    /// Handles jump input
-    /// Input:
-    /// none
-    /// Return:
-    /// void (no return)
-    /// </summary>
     private void HandleJumpInput()
     {
         if (jumpAction.triggered)
@@ -251,15 +181,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Description:
-    /// Coroutine which causes the player to jump.
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
-    /// <returns>IEnumerator: makes coroutine possible</returns>
     private IEnumerator Jump(float powerMultiplier = 1.0f)
     {
         if (timesJumped < allowedJumps && state != PlayerState.Dead)
@@ -279,14 +200,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Description:
-    /// Spawns the effect that occurs when the player jumps
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     private void SpawnJumpEffect()
     {
         if (jumpEffect != null)
@@ -295,14 +208,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Description:
-    /// Bounces the player upwards, refunding jumps.
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     public void Bounce()
     {
         timesJumped = 0;
@@ -316,14 +221,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Description:
-    /// Determines which way the player should be facing, then makes them face in that direction
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     private void HandleSpriteDirection()
     {
         if (spriteRenderer != null)
@@ -341,42 +238,17 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region State Functions
-    /// <summary>
-    /// Description:
-    /// Gets and returns the player's current state
-    /// Input: 
-    /// none
-    /// Return: 
-    /// PlayerState
-    /// </summary>
-    /// <returns>PlayerState: The player's current state (idle, walking, jumping, falling</returns>
+
     private PlayerState GetState()
     {
         return state;
     }
 
-    /// <summary>
-    /// Description:
-    /// Sets the player's current state
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
-    /// <param name="newState">The PlayerState to set the current state to</param>
     private void SetState(PlayerState newState)
     {
         state = newState;
     }
 
-    /// <summary>
-    /// Description:
-    /// Determines which state is appropriate for the player currently
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     private void DetermineState()
     {
         if (playerHealth.currentHealth <= 0)
@@ -412,14 +284,6 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
-    /// Description:
-    /// Sets up the player's rigidbody
-    /// Input: 
-    /// none
-    /// Return: 
-    /// void (no return)
-    /// </summary>
     private void SetupRigidbody()
     {
         if (playerRigidbody == null)
