@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// This class handles setting the checkpoint for the player to respawn at
-/// </summary>
 public class Checkpoint : MonoBehaviour
 {
     public Transform respawnLocation;

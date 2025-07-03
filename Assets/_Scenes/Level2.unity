@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 604965444}
+    - target: {fileID: 685065967275847956, guid: 752fba1c299177a42a70c9217eb75b3b, type: 3}
+      propertyPath: currentLevelNumber
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 685065967275847957, guid: 752fba1c299177a42a70c9217eb75b3b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -21567,7 +21571,7 @@ Tilemap:
       - {fileID: 608309585, guid: 59c64323ca2fc455c90c0b5057e2ca38, type: 3}
       - {fileID: 1842441954, guid: 59c64323ca2fc455c90c0b5057e2ca38, type: 3}
       - {fileID: -489987164, guid: 59c64323ca2fc455c90c0b5057e2ca38, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 24, y: -17, z: 0}

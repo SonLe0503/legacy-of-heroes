@@ -44,10 +44,11 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if ((player == null) && (FindObjectOfType<PlayerController>()!=null))
+        if ((player == null) && (FindObjectOfType<PlayerController>() != null))
         {
             player = FindObjectOfType<PlayerController>().gameObject;
-        } else if ((player == null) && (SceneManager.GetActiveScene().name!="MainMenu"))
+        }
+        else if ((player == null) && (SceneManager.GetActiveScene().name != "MainMenu"))
         {
             Debug.Log("Player is not set and cannot find it in the scene. This is not a problem in non-playable scenes, such as the Main Menu.");
         }
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
             {
                 PlayerPrefs.SetInt("lives", playerHealth.currentLives);
             }
-            
+
             playerHealth.currentLives = PlayerPrefs.GetInt("lives");
 
             // Set health accordingly
@@ -86,7 +87,7 @@ public class GameManager : MonoBehaviour
             {
                 PlayerPrefs.SetInt("health", playerHealth.currentHealth);
             }
-            
+
             playerHealth.currentHealth = PlayerPrefs.GetInt("health");
         }
         KeyRing.ClearKeyRing();
@@ -129,7 +130,7 @@ public class GameManager : MonoBehaviour
             {
                 Instantiate(victoryEffect, transform.position, transform.rotation, null);
             }
-        }     
+        }
     }
 
     public int gameOverPageIndex = 0;
