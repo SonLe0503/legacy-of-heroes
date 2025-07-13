@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Feet
+  - PlayerBullet
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -47,4 +49,10 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: PlayerBullet
+    uniqueID: 2990644607
+    locked: 0
+  - name: Gun
+    uniqueID: 417971453
     locked: 0
