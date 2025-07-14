@@ -10,12 +10,24 @@ public class GunPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerGunController playerGun = other.GetComponent<PlayerGunController>();
-            if (playerGun != null)
+            WeaponInventory inventory = other.GetComponent<WeaponInventory>();
+        if (inventory == null) return;
+
+        if (inventory.WeaponCount < inventory.maxWeapons)
+        {
+            inventory.AddWeapon(gunPrefab);
+        }
+        else
+        {
+            // Gọi UI thay thế
+            WeaponReplaceUI ui = FindObjectOfType<WeaponReplaceUI>();
+            if (ui != null)
             {
-                playerGun.EquipGun(gunPrefab);
-                Destroy(gameObject); // Xóa súng trong scene sau khi nhặt
+                ui.PromptReplaceWeapon(gunPrefab);
             }
+        }
+
+        Destroy(gameObject); // Xóa khỏi scene (tuỳ bạn, có thể hoãn lại)
         }
     }
 }

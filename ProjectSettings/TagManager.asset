@@ -7,6 +7,9 @@ TagManager:
   - Feet
   - PlayerBullet
   - Wall
+  - Gun
+  - Gun2
+  - Gun3
   layers:
   - Default
   - TransparentFX
@@ -55,4 +58,10 @@ TagManager:
     locked: 0
   - name: Gun
     uniqueID: 417971453
+    locked: 0
+  - name: Gun2
+    uniqueID: 890711847
+    locked: 0
+  - name: Gun3
+    uniqueID: 3420427121
     locked: 0

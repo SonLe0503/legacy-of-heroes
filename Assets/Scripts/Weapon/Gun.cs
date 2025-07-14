@@ -12,10 +12,22 @@ public class Gun : MonoBehaviour
     private float nextShot;
     [SerializeField] private int maxAmmo = 24;
     public int currentAmmo;
+    private GunType gunType;
+    private bool canShoot = true;
     // Start is called before the first frame update
+    [SerializeField] private float doubleShotSpacing = 0.3f;
+    public Sprite gunIcon;
+
+    public enum GunType
+    {
+        Single,     // Gun tag - 1 shot then reload
+        Double,     // Gun2 tag - 2 shots then reload  
+        Magazine    // Gun3 tag - 24 shots then reload
+    }
     void Start()
     {
         currentAmmo = maxAmmo;
+        DetermineGunType();
     }
 
     // Update is called once per frame
@@ -25,6 +37,31 @@ public class Gun : MonoBehaviour
         RotateGun();
         Shot();
         Reload();
+    }
+    void DetermineGunType()
+    {
+        string tag = gameObject.tag;
+        switch (tag)
+        {
+            case "Gun":
+                gunType = GunType.Single;
+                maxAmmo = 1;
+                currentAmmo = 1;
+                break;
+            case "Gun2":
+                gunType = GunType.Double;
+                maxAmmo = 2;
+                currentAmmo = 2;
+                break;
+            case "Gun3":
+                gunType = GunType.Magazine;
+                maxAmmo = 24;
+                currentAmmo = 24;
+                break;
+            default:
+                gunType = GunType.Magazine; // Default fallback
+                break;
+        }
     }
     void RotateGun()
     {
@@ -46,18 +83,66 @@ public class Gun : MonoBehaviour
     }
     void Shot()
     {
-        if (Input.GetMouseButtonDown(0) && currentAmmo > 0 && Time.time > nextShot)
+        if (Input.GetMouseButtonDown(0) && currentAmmo > 0 && Time.time > nextShot && canShoot)
         {
             nextShot = Time.time + shotDelay;
-            Instantiate(bulletPrefabs, firePos.position, firePos.rotation);
-            currentAmmo--;
+            
+            switch (gunType)
+            {
+                case GunType.Single:
+                    // Single shot - 1 bullet
+                    Instantiate(bulletPrefabs, firePos.position, firePos.rotation);
+                    currentAmmo--;
+                    canShoot = false; // Disable shooting until reload
+                    break;
+                    
+                case GunType.Double:
+                    // Double shot - 2 bullets with spacing
+                    if (currentAmmo >= 2)
+                    {
+                        // Tính toán vị trí 2 viên đạn dựa trên hướng súng
+                        Vector3 rightDirection = firePos.right;
+                        Vector3 leftPos = firePos.position + rightDirection * doubleShotSpacing;
+                        Vector3 rightPos = firePos.position - rightDirection * doubleShotSpacing;
+                        
+                        // Tạo 2 viên đạn với khoảng cách
+                        Instantiate(bulletPrefabs, leftPos, firePos.rotation);
+                        Instantiate(bulletPrefabs, rightPos, firePos.rotation);
+                        
+                        currentAmmo -= 2;
+                        canShoot = false; // Disable shooting until reload
+                    }
+                    break;
+                    
+                case GunType.Magazine:
+                    // Magazine - single bullet, can shoot multiple times
+                    Instantiate(bulletPrefabs, firePos.position, firePos.rotation);
+                    currentAmmo--;
+                    break;
+            }
         }
     }
     void Reload()
     {
-        if(Input.GetMouseButtonDown(1) && currentAmmo < maxAmmo)
+        if(Input.GetMouseButtonDown(1))
         {
-            currentAmmo = maxAmmo;
+            switch (gunType)
+            {
+                case GunType.Single:
+                case GunType.Double:
+                    // Reload to full capacity
+                    currentAmmo = maxAmmo;
+                    canShoot = true; // Re-enable shooting
+                    break;
+                    
+                case GunType.Magazine:
+                    // Only reload if not full
+                    if (currentAmmo < maxAmmo)
+                    {
+                        currentAmmo = maxAmmo;
+                    }
+                    break;
+            }
         }
     }
 }
