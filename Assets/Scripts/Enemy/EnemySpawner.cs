@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject[] enemyPrefabs;        // Các enemy prefab để spawn
-    public Transform[] spawnPoints;          // Các điểm spawn đặt sẵn trong scene
-    public Transform player;                 // Player (kéo vào từ Hierarchy)
-    public float spawnDistance = 10f;        // Khoảng cách để kích hoạt spawn
+    public GameObject[] enemyPrefabs;        
+    public Transform[] spawnPoints;          
+    public Transform player;                
+    public float spawnDistance = 10f;        
 
-    private bool[] hasSpawned;               // Theo dõi điểm nào đã spawn
+    private bool[] hasSpawned;               
 
     void Start()
     {
-        // Khởi tạo mảng theo số lượng spawn points
+       
         hasSpawned = new bool[spawnPoints.Length];
     }
 
